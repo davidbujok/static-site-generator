@@ -76,6 +76,15 @@ class TestTextNode(unittest.TestCase):
         split = text_node.split_nodes_delimiter(leaf_node, "`", TextType.CODE)
         self.assertEqual(split[1].text_type, TextType.CODE)
 
+    def test_can_split_on_code_multiple_occurances_return_correct_code_type_for_eacg(self):
+        leaf_node = LeafNode("div", "",)
+        text_node = Textnode("This will be code block `calc = 2+2` node and another one `multi = 2*2`", TextType.TEXT)
+        split = text_node.split_nodes_delimiter(leaf_node, "`", TextType.CODE)
+        self.assertEqual(split[1].text_type, TextType.CODE)
+        self.assertEqual(split[1].text, "calc = 2+2")
+        self.assertEqual(split[3].text_type, TextType.CODE)
+        self.assertEqual(split[3].text, "multi = 2*2")
+
 
 if __name__ == "__main__":
     unittest.main()
