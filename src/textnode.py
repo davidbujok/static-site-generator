@@ -12,7 +12,6 @@ class Textnode:
                 self.text == other.text and
                 self.url == other.url
         )
-        
 
     def __repr__(self) -> str:
         return f"Text: {self.text} Type: {self.text_type} Url:{self.url}"
