@@ -58,6 +58,24 @@ class TestTextNode(unittest.TestCase):
         )
         self.assertTrue(leaf_node.__eq__(compare_this_leaf_node))
 
+    def test_can_split_on_asteriks_return_correct_text_type(self):
+        leaf_node = LeafNode("div", "",)
+        text_node = Textnode("This is a text with some **boldness** node", TextType.TEXT)
+        split = text_node.split_nodes_delimiter(leaf_node, "*", TextType.BOLD)
+        self.assertEqual(split[0].text_type, TextType.TEXT)
+
+    def test_can_split_on_asteriks_return_correct_bold_type(self):
+        leaf_node = LeafNode("div", "",)
+        text_node = Textnode("This is a text with some **boldness** node", TextType.TEXT)
+        split = text_node.split_nodes_delimiter(leaf_node, "*", TextType.BOLD)
+        self.assertEqual(split[1].text_type, TextType.BOLD)
+
+    def test_can_split_on_code_return_correct_code_type(self):
+        leaf_node = LeafNode("div", "",)
+        text_node = Textnode("This will be code block `calc = 2+2` node", TextType.TEXT)
+        split = text_node.split_nodes_delimiter(leaf_node, "`", TextType.CODE)
+        self.assertEqual(split[1].text_type, TextType.CODE)
+
 
 if __name__ == "__main__":
     unittest.main()
