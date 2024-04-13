@@ -1,4 +1,6 @@
 from htmlnode import HTMLNode
+
+
 class LeafNode(HTMLNode):
 
     def __init__(self, value, tag=None, props=None):
@@ -7,6 +9,13 @@ class LeafNode(HTMLNode):
 
     def __repr__(self):
         return f"LeafNode: {self.tag} {self.value} {self.props}"
+
+    def __eq__(self, other):
+        return (
+            self.value == other.value
+            and self.tag == other.tag
+            and self.props == other.props
+        )
 
     def to_html(self):
         if self.value is None:
@@ -21,8 +30,3 @@ class LeafNode(HTMLNode):
         else:
             new_tag = f"<{self.tag}>{self.value}</{self.tag}>"
             return new_tag
-
-
-
-    
-        
