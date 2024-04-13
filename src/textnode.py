@@ -49,3 +49,33 @@ class Textnode:
 
         if self.text_type == TextType.IMAGE:
             return LeafNode("", "img", {"src": self.url, "alt": self.text})
+
+    def split_nodes_delimiter(self, old_nodes, delimiter, text_type): 
+
+        if self.text_type != TextType.TEXT:
+            pass
+
+        copy_text = self.text
+        split_text = copy_text.split(delimiter)
+        new_nodes = []
+        markup = False
+        markupEnd = False
+        for text in split_text:
+            if len(text) == 0:
+                if markupEnd == True:
+                    continue
+                else:
+                    markup = True
+                    continue
+
+            if len(text) > 0 and markup is False:
+                node = Textnode(text, TextType.TEXT)
+                new_nodes.append(node)
+
+            if markup is True:
+                node = Textnode(text, text_type)
+                new_nodes.append(node)
+                markupEnd = True
+                markup = False
+
+        return new_nodes
