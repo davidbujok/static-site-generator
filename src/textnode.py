@@ -57,25 +57,16 @@ class Textnode:
 
         copy_text = self.text
         split_text = copy_text.split(delimiter)
+        remove_empty_items = filter(lambda x: len(x) != 0, split_text)
+        text_list = list(remove_empty_items)
         new_nodes = []
-        markup = False
-        markupEnd = False
-        for text in split_text:
-            if len(text) == 0:
-                if markupEnd == True:
-                    continue
-                else:
-                    markup = True
-                    continue
 
-            if len(text) > 0 and markup is False:
+        for index, text in enumerate(text_list):
+            if index % 2 == 0:
                 node = Textnode(text, TextType.TEXT)
                 new_nodes.append(node)
-
-            if markup is True:
+            else:
                 node = Textnode(text, text_type)
                 new_nodes.append(node)
-                markupEnd = True
-                markup = False
 
         return new_nodes
