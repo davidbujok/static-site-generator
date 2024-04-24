@@ -2,24 +2,26 @@ import re
 from functions import extract_markdown_images, extract_markdown_links
 from textnode import TextType, Textnode
 
-#        listToCompare = [
-#            Textnode("This is text with an ", TextType.TEXT),
-#            Textnode(
-#                "link",
-#                TextType.IMAGE,
-#                "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png",
-#            ),
-#            Textnode(" and another ", TextType.TEXT),
-#            Textnode(
-#                "second link",
-#                TextType.IMAGE,
-#                "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png",
-#            ),
-#        ]
-#        node = Textnode(
-#            "This is text with an [link](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another [second link](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
-#            TextType.TEXT,
-#        )
+def split_nodes_delimiter(old_nodes, delimiter, text_type): 
+
+    if text_type != TextType.TEXT:
+        pass
+
+    copy_text = old_nodes.text
+    split_text = copy_text.split(delimiter)
+    remove_empty_items = filter(lambda x: len(x) != 0, split_text)
+    text_list = list(remove_empty_items)
+    new_nodes = []
+
+    for index, text in enumerate(text_list):
+        if index % 2 == 0:
+            node = Textnode(text, TextType.TEXT)
+            new_nodes.append(node)
+        else:
+            node = Textnode(text, text_type)
+            new_nodes.append(node)
+
+    return new_nodes
 
 def split_node_images(old_nodes):
     nodes_copy = old_nodes

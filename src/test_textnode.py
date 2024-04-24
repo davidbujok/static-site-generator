@@ -1,6 +1,7 @@
 import unittest
 
 from leafnode import LeafNode
+from splitfunctions import split_nodes_delimiter
 from textnode import TextType, Textnode
 
 
@@ -28,25 +29,25 @@ class TestTextNode(unittest.TestCase):
         bold_text_node = Textnode("This is a bold node", TextType.BOLD)
         leaf_node = bold_text_node.text_node_to_html_node()
         compare_this_leaf_node = LeafNode("This is a bold node", "b")
-        self.assertTrue(leaf_node.__eq__(compare_this_leaf_node))
+        self.assertTrue(leaf_node == compare_this_leaf_node)
 
     def test_italic_conversion(self):
         italic_text_node = Textnode("This is a italic node", TextType.ITALIC)
         leaf_node = italic_text_node.text_node_to_html_node()
         compare_this_leaf_node = LeafNode("This is a italic node", "i")
-        self.assertTrue(leaf_node.__eq__(compare_this_leaf_node))
+        self.assertTrue(leaf_node == compare_this_leaf_node)
 
     def test_code_conversion(self):
         code_text_node = Textnode("This is a code node", TextType.CODE)
         leaf_node = code_text_node.text_node_to_html_node()
         compare_this_leaf_node = LeafNode("This is a code node", "code")
-        self.assertTrue(leaf_node.__eq__(compare_this_leaf_node))
+        self.assertTrue(leaf_node == compare_this_leaf_node)
 
     def test_link_conversion(self):
         link_text_node = Textnode("This is a link node", TextType.LINK)
         leaf_node = link_text_node.text_node_to_html_node()
         compare_this_leaf_node = LeafNode("This is a link node", "a", {"href": ""})
-        self.assertTrue(leaf_node.__eq__(compare_this_leaf_node))
+        self.assertTrue(leaf_node == compare_this_leaf_node)
 
     def test_image_conversion(self):
         image_text_node = Textnode(
@@ -56,30 +57,26 @@ class TestTextNode(unittest.TestCase):
         compare_this_leaf_node = LeafNode(
             "", "img", {"src": "https://test.com", "alt": "This is image description"}
         )
-        self.assertTrue(leaf_node.__eq__(compare_this_leaf_node))
+        self.assertTrue(leaf_node == compare_this_leaf_node)
 
     def test_can_split_on_asteriks_return_correct_text_type(self):
-        leaf_node = LeafNode("div", "",)
         text_node = Textnode("This is a text with some **boldness** node", TextType.TEXT)
-        split = text_node.split_nodes_delimiter(leaf_node, "*", TextType.BOLD)
+        split = split_nodes_delimiter(text_node, "*", TextType.BOLD)
         self.assertEqual(split[0].text_type, TextType.TEXT)
 
     def test_can_split_on_asteriks_return_correct_bold_type(self):
-        leaf_node = LeafNode("div", "",)
         text_node = Textnode("This is a text with some **boldness** node", TextType.TEXT)
-        split = text_node.split_nodes_delimiter(leaf_node, "*", TextType.BOLD)
+        split = split_nodes_delimiter(text_node, "*", TextType.BOLD)
         self.assertEqual(split[1].text_type, TextType.BOLD)
 
     def test_can_split_on_code_return_correct_code_type(self):
-        leaf_node = LeafNode("div", "",)
         text_node = Textnode("This will be code block `calc = 2+2` node", TextType.TEXT)
-        split = text_node.split_nodes_delimiter(leaf_node, "`", TextType.CODE)
+        split = split_nodes_delimiter(text_node, "`", TextType.CODE)
         self.assertEqual(split[1].text_type, TextType.CODE)
 
     def test_can_split_on_code_multiple_occurances_return_correct_code_type_for_eacg(self):
-        leaf_node = LeafNode("div", "",)
         text_node = Textnode("This will be code block `calc = 2+2` node and another one `multi = 2*2`", TextType.TEXT)
-        split = text_node.split_nodes_delimiter(leaf_node, "`", TextType.CODE)
+        split = split_nodes_delimiter(text_node, "`", TextType.CODE)
         self.assertEqual(split[1].text_type, TextType.CODE)
         self.assertEqual(split[1].text, "calc = 2+2")
         self.assertEqual(split[3].text_type, TextType.CODE)
