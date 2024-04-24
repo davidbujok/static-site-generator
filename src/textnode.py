@@ -44,8 +44,9 @@ class Textnode:
         if self.text_type == TextType.CODE:
             return LeafNode(self.text, "code")
 
+        if self.text_type == TextType.IMAGE:
+            return LeafNode("", "img", {"src": self.url, "alt": self.text})
+
         if self.text_type == TextType.LINK:
             return LeafNode(self.text, "a", {"href": ""})
 
-        if self.text_type == TextType.IMAGE:
-            return LeafNode("", "img", {"src": self.url, "alt": self.text})
