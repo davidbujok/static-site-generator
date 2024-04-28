@@ -49,4 +49,3 @@ class Textnode:
 
         if self.text_type == TextType.LINK:
             return LeafNode(self.text, "a", {"href": ""})
-

@@ -7,12 +7,16 @@ from textnode import TextType, Textnode
 class TestExtractingFunction(unittest.TestCase):
 
     def test_can_split_on_asteriks_return_correct_text_type(self):
-        text_node = Textnode("This is a text with some **boldness** node", TextType.TEXT)
+        text_node = Textnode(
+            "This is a text with some **boldness** node", TextType.TEXT
+        )
         split = split_nodes_delimiter(text_node, "*", TextType.BOLD)
         self.assertEqual(split[0].text_type, TextType.TEXT)
 
     def test_can_split_on_asteriks_return_correct_bold_type(self):
-        text_node = Textnode("This is a text with some **boldness** node", TextType.TEXT)
+        text_node = Textnode(
+            "This is a text with some **boldness** node", TextType.TEXT
+        )
         split = split_nodes_delimiter(text_node, "*", TextType.BOLD)
         self.assertEqual(split[1].text_type, TextType.BOLD)
 
@@ -21,8 +25,13 @@ class TestExtractingFunction(unittest.TestCase):
         split = split_nodes_delimiter(text_node, "`", TextType.CODE)
         self.assertEqual(split[1].text_type, TextType.CODE)
 
-    def test_can_split_on_code_multiple_occurances_return_correct_code_type_for_eacg(self):
-        text_node = Textnode("This will be code block `calc = 2+2` node and another one `multi = 2*2`", TextType.TEXT)
+    def test_can_split_on_code_multiple_occurances_return_correct_code_type_for_eacg(
+        self,
+    ):
+        text_node = Textnode(
+            "This will be code block `calc = 2+2` node and another one `multi = 2*2`",
+            TextType.TEXT,
+        )
         split = split_nodes_delimiter(text_node, "`", TextType.CODE)
         self.assertEqual(split[1].text_type, TextType.CODE)
         self.assertEqual(split[1].text, "calc = 2+2")
@@ -83,13 +92,21 @@ class TestExtractingFunction(unittest.TestCase):
         self.assertEqual(result[0].text, "This is text with an ")
         self.assertEqual(result[0].text_type, TextType.TEXT)
         self.assertEqual(result[1].text, "image")
-        self.assertEqual(result[1].url, "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png")
+        self.assertEqual(
+            result[1].url,
+            "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png",
+        )
         self.assertEqual(result[2].text, " and another ")
         self.assertEqual(result[3].text, "second image")
-        self.assertEqual(result[3].url, "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png")
+        self.assertEqual(
+            result[3].url,
+            "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png",
+        )
         self.assertEqual(result[4].text, " yet another ")
         self.assertEqual(result[5].text, "third image")
-        self.assertEqual(result[5].url, "https://mortgage.pogleapis.com/manult/sets/556cxdx.png")
+        self.assertEqual(
+            result[5].url, "https://mortgage.pogleapis.com/manult/sets/556cxdx.png"
+        )
         self.assertEqual(result, listToCompare)
 
     def test_can_extract_links_from_node(self):
@@ -122,13 +139,21 @@ class TestExtractingFunction(unittest.TestCase):
         self.assertEqual(result[0].text, "This is text with an ")
         self.assertEqual(result[0].text_type, TextType.TEXT)
         self.assertEqual(result[1].text, "link")
-        self.assertEqual(result[1].url, "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png")
+        self.assertEqual(
+            result[1].url,
+            "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png",
+        )
         self.assertEqual(result[2].text, " and another ")
         self.assertEqual(result[3].text, "second link")
-        self.assertEqual(result[3].url, "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png")
+        self.assertEqual(
+            result[3].url,
+            "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png",
+        )
         self.assertEqual(result[4].text, " yet another ")
         self.assertEqual(result[5].text, "third link")
-        self.assertEqual(result[5].url, "https://mortgage.pogleapis.com/manult/sets/556cxdx.png")
+        self.assertEqual(
+            result[5].url, "https://mortgage.pogleapis.com/manult/sets/556cxdx.png"
+        )
         self.assertEqual(result, listToCompare)
 
     def test_can_extract_markdown_block(self):
