@@ -112,3 +112,17 @@ def text_to_textnodes(text):
                 extracted_nodes.append(links[index])
     return extracted_nodes
     
+def markdown_to_block(markdown):
+    lines = markdown.split("\n")
+    block = []
+    blocks = []
+    for line in lines:
+        if len(line) > 0:
+            block.append(line.strip())
+        else:
+            blocks.append(block)
+            block = []
+    if len(block) > 0:
+        blocks.append(block)
+    return blocks
+
