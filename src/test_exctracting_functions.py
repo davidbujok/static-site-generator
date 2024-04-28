@@ -1,6 +1,6 @@
 import unittest
 from functions import *
-from splitfunctions import split_node_images, split_node_links, split_nodes_delimiter
+from splitfunctions import markdown_to_block, split_node_images, split_node_links, split_nodes_delimiter
 from textnode import TextType, Textnode
 
 
@@ -130,6 +130,26 @@ class TestExtractingFunction(unittest.TestCase):
         self.assertEqual(result[5].text, "third link")
         self.assertEqual(result[5].url, "https://mortgage.pogleapis.com/manult/sets/556cxdx.png")
         self.assertEqual(result, listToCompare)
+
+    def test_can_extract_markdown_block(self):
+
+        text = """This is **bolded** paragraph
+
+                  This is another paragraph with *italic* text and `code` here
+                  This is the same paragraph on a new line
+
+                  * This is a list
+                  * with items"""
+        block_two = [ "This is another paragraph with *italic* text and `code` here", \
+                    "This is the same paragraph on a new line" ]
+        block_three = [ "* This is a list", "* with items" ]
+        blocks = markdown_to_block(text)
+        self.assertEqual(len(blocks), 3)
+        self.assertEqual(type(blocks), list)
+        self.assertEqual(blocks[0], ["This is **bolded** paragraph"])
+        self.assertEqual(blocks[1], block_two)
+        self.assertEqual(blocks[2], block_three)
+
 
 if __name__ == "__main__":
     unittest.main()
