@@ -1,6 +1,3 @@
-from typing import List
-
-
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=[], props=None):
         self.tag = tag
@@ -24,4 +21,3 @@ class HTMLNode:
 
     def __repr__(self):
         return f"HTMLNode({self.tag}, {self.value}, children: {self.children}, {self.props})"
-

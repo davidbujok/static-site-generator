@@ -1,9 +1,11 @@
 import unittest
-from htmlnode import HTMLNode
-from leafnode import LeafNode
+
+from src.htmlnode import HTMLNode
+from src.leafnode import LeafNode
 
 
 class TestHTMLNode(unittest.TestCase):
+
     def test_to_html_props(self):
         node = HTMLNode(
             "div",
@@ -15,6 +17,7 @@ class TestHTMLNode(unittest.TestCase):
             node.props_to_html(),
             ' class="greeting" href="https://boot.dev"',
         )
+
     def test_can_have_children(self):
         node = HTMLNode(
             "p",
