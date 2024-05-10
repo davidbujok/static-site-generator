@@ -105,3 +105,37 @@ def extract_text_nodes(text):
     images = extract_images(itertools.chain(*code_blocks))
     nodes_to_return = extract_links(images)
     return list(nodes_to_return)
+
+
+def extract_block_type(block):
+    count = 0
+    heading_level = 0
+    re_numbers = re.compile(r"^[0-9]*.\s")
+    stripped_txt = block[0].lstrip()
+    while block[0][count] == "#":
+        heading_level += 1
+        count += 1
+
+    if heading_level > 0:
+        return BlockType.HEADING
+
+    while count < len(block[0]) and block[0][count] == "'":
+        count += 1
+
+    if count == 3 and heading_level == 0:
+        closing_block = block[-1][-3:]
+        if closing_block == "'''":
+            return BlockType.CODE
+
+    if stripped_txt[0:2] == "* " or stripped_txt[0:2] == "- ":
+        return BlockType.UNORDERED_LIST
+    if re_numbers.match(block[0]):
+        return BlockType.ORDERED_LIST
+
+    while count < len(block):
+        if block[count][0] != "<":
+            break
+        if count == len(block) - 1:
+            return BlockType.QUOTE
+        count += 1
+    return BlockType.PARAGRAPH
