@@ -2,4 +2,6 @@ __pycache__/
 .git
 venv
 __pycache__
+/public
+public
 Session.vim

@@ -1,0 +1,12 @@
+{
+    {
+        "include": [
+            "**/*.py"
+        ]
+    },
+    {
+        "executionEnvironments": [
+            {"root": "src"}
+        ]
+    }
+}
