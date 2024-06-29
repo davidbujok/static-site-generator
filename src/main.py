@@ -1,8 +1,13 @@
+from generate_page import generate_page, generate_page_recursive
 from textnode import TextNode
 
 def main():
-    new_textnode = TextNode("This is a text node", "bold", "https://boot.dev")
-    print(new_textnode)
+
+    from_path = "./content/index.md"
+    template_path = "./templates/template.html"
+    dest_path = "./public/"
+    # generate_page(from_path, template_path, dest_path)
+    generate_page_recursive("./content", template_path, dest_path)
 
 main()
 
